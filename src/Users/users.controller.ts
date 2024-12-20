@@ -8,6 +8,8 @@ import {
   Param,
   Query,
   Body,
+  Headers,
+  Ip,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -22,9 +24,11 @@ export class UsersController {
   }
 
   @Post()
-  public createUser(@Body() req: any) {
+  public createUser(@Body() req: any, @Headers() headers: any, @Ip() ip: string) {
     const userData = req;
     console.log(userData);
+    console.log('Headers:', headers);
+    console.log('ip:', ip);
     return `Create user with data: ${JSON.stringify(userData)}`;
   }
 
