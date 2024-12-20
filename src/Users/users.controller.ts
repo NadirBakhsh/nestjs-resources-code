@@ -1,29 +1,45 @@
-import { Controller, Get, Post, Put, Delete, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Param,
+  Query,
+  Body,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
-  @Get()
-  public getUsers() {
-    return 'Get all users';
+  @Get('/:userId')
+  public getUser(@Param('userId') userId: string, @Query() query: any) {
+    if (userId) {
+      console.log(query);
+      return `Get user with ID ${userId}`;
+    }
+    return `Get all users`;
   }
 
   @Post()
-  public createUser() {
-    return 'Create user';
+  public createUser(@Body() req: any) {
+    const userData = req;
+    console.log(userData);
+    return `Create user with data: ${JSON.stringify(userData)}`;
   }
 
-  @Put()
-  public updateUser() {
-    return 'Update user';
+  @Put(':userId')
+  public updateUser(@Param('userId') userId: string) {
+    return `Update user with ID ${userId}`;
   }
 
-  @Delete()
-  public removeUser() {
-    return 'Remove user';
+  @Delete(':userId')
+  public removeUser(@Param('userId') userId: string) {
+    return `Remove user with ID ${userId}`;
   }
 
-  @Patch()
-  public updatePartialUser() {
-    return 'Update partial user';
+  @Patch(':userId')
+  public updatePartialUser(@Param('userId') userId: string) {
+    return `Update partial user with ID ${userId}`;
   }
 }
