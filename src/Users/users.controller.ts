@@ -17,14 +17,19 @@ export class UsersController {
   @Get('/:userId')
   public getUser(@Param('userId') userId: string, @Query() query: any) {
     if (userId) {
-      console.log(query);
+      console.log('limit', typeof query?.limit);
+      console.log('offset', typeof query?.offset);
       return `Get user with ID ${userId}`;
     }
     return `Get all users`;
   }
 
   @Post()
-  public createUser(@Body() req: any, @Headers() headers: any, @Ip() ip: string) {
+  public createUser(
+    @Body() req: any,
+    @Headers() headers: any,
+    @Ip() ip: string,
+  ) {
     const userData = req;
     console.log(userData);
     console.log('Headers:', headers);
