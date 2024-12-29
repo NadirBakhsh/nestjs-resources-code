@@ -10,13 +10,19 @@ import {
   Body,
   Headers,
   Ip,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
-  @Get('/:userId')
-  public getUser(@Param('userId') userId: string, @Query() query: any) {
+  @Get('/:userId?')
+  public getUser(
+    @Param('userId', ParseIntPipe) userId: string,
+    @Query() query: any,
+  ) {
     if (userId) {
+      console.log('type of id', typeof userId);
+      console.log('userId', userId);
       console.log('limit', typeof query?.limit);
       console.log('offset', typeof query?.offset);
       return `Get user with ID ${userId}`;
