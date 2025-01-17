@@ -11,8 +11,10 @@ import {
   Headers,
   Ip,
   ParseIntPipe,
+  ValidationPipe,
   DefaultValuePipe,
 } from '@nestjs/common';
+import { CreateUserDto } from './dtos/create-user.dtos';
 
 @Controller('users')
 export class UsersController {
@@ -34,11 +36,11 @@ export class UsersController {
 
   @Post()
   public createUser(
-    @Body() req: any,
+    @Body(new ValidationPipe()) createUserDto: CreateUserDto,
     @Headers() headers: any,
     @Ip() ip: string,
   ) {
-    const userData = req;
+    const userData = createUserDto;
     console.log(userData);
     console.log('Headers:', headers);
     console.log('ip:', ip);
