@@ -36,7 +36,7 @@ export class UsersController {
 
   @Post()
   public createUser(
-    @Body(new ValidationPipe()) createUserDto: CreateUserDto,
+    @Body() createUserDto: CreateUserDto,
     @Headers() headers: any,
     @Ip() ip: string,
   ) {
