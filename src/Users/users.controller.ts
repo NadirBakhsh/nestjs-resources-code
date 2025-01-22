@@ -1,35 +1,35 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Patch,
-  Param,
-  Query,
   Body,
+  Controller,
+  DefaultValuePipe,
+  Delete,
+  Get,
   Headers,
   Ip,
+  Param,
   ParseIntPipe,
-  ValidationPipe,
-  DefaultValuePipe,
+  Patch,
+  Post,
+  Put,
+  Query
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dtos';
+import { GetUsersParamDto } from './dtos/get-user-params.dto';
 
 @Controller('users')
 export class UsersController {
   @Get('/:userId?')
   public getUser(
-    @Param('userId', ParseIntPipe) userId: string,
+    @Param() getUsersParamDto: GetUsersParamDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    if (userId) {
-      console.log('type of id', typeof userId);
-      console.log('userId', userId);
+    if (getUsersParamDto) {
+      console.log('type of id', getUsersParamDto instanceof GetUsersParamDto);
+      console.log('userId', getUsersParamDto);
       console.log('limit', limit);
       console.log('page', page);
-      return `Get user with ID ${userId}`;
+      return `Get user with ID ${getUsersParamDto}`;
     }
     return `Get all users`;
   }
