@@ -28,14 +28,7 @@ export class UsersController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    if (getUsersParamDto) {
-      console.log('type of id', getUsersParamDto instanceof GetUsersParamDto);
-      console.log('userId', getUsersParamDto);
-      console.log('limit', limit);
-      console.log('page', page);
-      return `Get user with ID ${getUsersParamDto}`;
-    }
-    return `Get all users`;
+    return this.usersService.findAll(getUsersParamDto, limit, page);
   }
 
   @Post()
