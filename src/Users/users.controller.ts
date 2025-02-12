@@ -15,9 +15,13 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dtos';
 import { GetUsersParamDto } from './dtos/get-user-params.dto';
+import { UsersService } from './providers/users.service';
 
 @Controller('users')
 export class UsersController {
+
+  constructor(private readonly usersService: UsersService) {}
+
   @Get('/:userId?')
   public getUser(
     @Param() getUsersParamDto: GetUsersParamDto,
