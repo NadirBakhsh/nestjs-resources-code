@@ -13,4 +13,8 @@ export class UsersService {
       { firstName: 'Jane', email: 'jane@example.com' },
     ];
   }
+
+  findOneById(userId: number) {
+    return { userId: 123, firstName: 'John', email: 'john@example.com' };
+  }
 }
