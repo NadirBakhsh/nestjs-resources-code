@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class PostsService {}
+export class PostsService {
+    public findAll(userId: string) {
+      console.log('userId:', userId);
+    }
+}
 
