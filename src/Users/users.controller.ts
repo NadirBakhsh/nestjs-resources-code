@@ -16,7 +16,9 @@ import {
 import { CreateUserDto } from './dtos/create-user.dtos';
 import { GetUsersParamDto } from './dtos/get-user-params.dto';
 import { UsersService } from './providers/users.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
 
