@@ -11,20 +11,42 @@ import {
   Patch,
   Post,
   Put,
-  Query
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dtos';
 import { GetUsersParamDto } from './dtos/get-user-params.dto';
 import { UsersService } from './providers/users.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-
   constructor(private readonly usersService: UsersService) {}
 
   @Get('/:userId?')
+  @ApiOperation({
+    summary:
+      'Get users by userId or all, if no userId is provided users will be returned as an array',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns an array of users successfully',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: Number,
+    required: false,
+    description: 'Limit the number of users',
+    example: 10,
+  })
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    required: false,
+    description:
+      'The position of the page number that you want the API to return',
+    example: 1,
+  })
   public getUser(
     @Param() getUsersParamDto: GetUsersParamDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
