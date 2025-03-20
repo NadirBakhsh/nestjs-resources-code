@@ -61,11 +61,8 @@ export class UsersController {
     @Headers() headers: any,
     @Ip() ip: string,
   ) {
-    const userData = createUserDto;
-    console.log(userData);
-    console.log('Headers:', headers);
-    console.log('ip:', ip);
-    return `Create user with data: ${JSON.stringify(userData)}`;
+
+    return this.usersService.createUser(createUserDto);
   }
 
   @Put(':userId')
