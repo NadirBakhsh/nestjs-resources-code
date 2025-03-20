@@ -8,6 +8,7 @@ import {
   IsString,
   IsUrl,
   Matches,
+  MaxLength,
   MinLength,
   ValidateNested,
 } from 'class-validator';
@@ -24,6 +25,7 @@ export class CreatePostDto {
   @IsString()
   @MinLength(3)
   @IsNotEmpty()
+  @MaxLength(512)
   title: string;
 
   @ApiProperty({
@@ -41,6 +43,7 @@ export class CreatePostDto {
   })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(256)
   @Matches(/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/, {
     message: 'Slug must be a valid slug',
   })
@@ -79,6 +82,7 @@ export class CreatePostDto {
   })
   @IsOptional()
   @IsUrl()
+  @MaxLength(1024)
   featuredImageUrl?: string;
 
   @ApiPropertyOptional({
