@@ -10,14 +10,11 @@ Content-Type: application/json
     "schema": "{\r\n  \"@context\": \"https:\\/\\/schema.org\",\r\n  \"@type\": \"Person\"\r\n}",
     "featuredImageUrl": "https://example.com/image.jpg",
     "publishOn": "2020-01-01T00:00:00.000Z",
-    "tags": [
-        "tag1",
-        "tag2"
-    ],
-    "metaOptions": [
-        {
-            "key": "meta-key",
-            "value": "meta-value"
-        }
-    ]
+    // "tags": [
+    //     "tag1",
+    //     "tag2"
+    // ],
+    "metaOptions": {
+        "metaValue": "{\"sidebarEnabled\": true, \"footerActive\": true}"
+    }
 }
