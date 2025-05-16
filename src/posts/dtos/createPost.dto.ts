@@ -109,7 +109,7 @@ export class CreatePostDto {
     items: {
       type: 'object',
       properties: {
-        metavalue: {
+        metaValue: {
           type: 'json',
           description:
             'meta value is a json string',
