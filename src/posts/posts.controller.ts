@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dtos/createPost.dto';
 import { PatchPostDto } from './dtos/patch-post-dto';
@@ -36,6 +36,11 @@ export class PostsController {
     @Patch()
     public updatePost(@Body() patchPostDto: PatchPostDto) {
         console.log(patchPostDto)
+    }
+
+    @Delete()
+    public deletePost(@Query('id', ParseIntPipe) id: number) {
+        return this.postsService.delete(id);
     }
 
 }
