@@ -9,7 +9,7 @@ export class PostsController {
     // Injecting Posts Service
     constructor(private readonly postsService: PostsService) {}
 
-    @Get('/:userId')
+    @Get('/:userId?')
     public getPosts(@Param("userId") userId: string) {
         return this.postsService.findAll(userId);
     }
