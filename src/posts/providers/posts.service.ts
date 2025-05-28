@@ -18,26 +18,24 @@ export class PostsService {
 
     // Injecting Meta options repository
     @InjectRepository(MetaOption)
-    private readonly metaOptionRepository: Repository<MetaOption>
-
+    private readonly metaOptionRepository: Repository<MetaOption>,
   ) {}
 
   public async findAll(userId: string) {
     const user = this.usersService.findOneById(userId);
-    let posts = await this.postRepository.find(
-    //  optional here to include relations get data from other tables
+    let posts = await this.postRepository
+      .find
+      //  optional here to include relations get data from other tables
       // {
       // relations: {
-      //   metaOptions: true,  
+      //   metaOptions: true,
       // },
       // }
-    );
+      ();
     return posts;
   }
 
   public async create(@Body() createPostDto: CreatePostDto) {
-
-
     // create a post
     let post = this.postRepository.create(createPostDto);
 
@@ -45,23 +43,28 @@ export class PostsService {
     return await this.postRepository.save(post);
   }
 
-
   public async delete(id: number) {
     // find the post
     let post = await this.postRepository.findOneBy({ id });
 
-    // Delete the post
-    await this.postRepository.delete(id);
+    // // Delete the post
+    // await this.postRepository.delete(id);
 
-    // Delete the meta options
-    await this.metaOptionRepository.delete({ id: post.metaOptions.id });
+    // // Delete the meta options
+    // await this.metaOptionRepository.delete({ id: post.metaOptions.id });
 
-    // Confirmation
+    // // Confirmation
+
+    let inversePost = await this.metaOptionRepository.find({
+      where: { id: post.metaOptions.id },
+      relations: { post: true },
+    });
+
+    console.log('inversePost', inversePost);
+
     return {
       deleted: true,
       id,
-
-    }
+    };
   }
-
 }

@@ -1,4 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { postType } from './enums/postType.enum';
 import { postStatus } from './enums/postStatus.enum';
 import { CreatePostMetaOptionsDto } from '../meta-options/dtos/createPostMetaOptions.dto';
@@ -63,10 +69,10 @@ export class Post {
     nullable: true,
   })
   publishOn?: Date;
-  
-  @OneToOne(() => MetaOption, {
+
+  @OneToOne(() => MetaOption, (metaOption) => metaOption.post, {
     cascade: true,
-    
+
     //  here we are using eager loading to load the meta options with the post
     eager: true,
   })
