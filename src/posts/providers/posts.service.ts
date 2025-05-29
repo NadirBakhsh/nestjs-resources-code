@@ -44,24 +44,7 @@ export class PostsService {
   }
 
   public async delete(id: number) {
-    // find the post
-    let post = await this.postRepository.findOneBy({ id });
-
-    // // Delete the post
-    // await this.postRepository.delete(id);
-
-    // // Delete the meta options
-    // await this.metaOptionRepository.delete({ id: post.metaOptions.id });
-
-    // // Confirmation
-
-    let inversePost = await this.metaOptionRepository.find({
-      where: { id: post.metaOptions.id },
-      relations: { post: true },
-    });
-
-    console.log('inversePost', inversePost);
-
+    await this.postRepository.delete({ id });
     return {
       deleted: true,
       id,

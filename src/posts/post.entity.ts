@@ -76,7 +76,7 @@ export class Post {
     //  here we are using eager loading to load the meta options with the post
     eager: true,
   })
-  @JoinColumn()
+  
   metaOptions?: MetaOption;
 
   //   working in future
