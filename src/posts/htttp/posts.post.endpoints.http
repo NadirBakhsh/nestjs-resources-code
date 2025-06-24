@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "title": "Post Title",
     "postType": "post",
-    "slug": "post-title-3",
+    "slug": "post-title-4",
     "status": "draft",
     "content": "Post content",
     "schema": "{\r\n  \"@context\": \"https:\\/\\/schema.org\",\r\n  \"@type\": \"Person\"\r\n}",
@@ -16,5 +16,6 @@ Content-Type: application/json
     // ],
     "metaOptions": {
         "metaValue": "{\"sidebarEnabled\": true, \"footerActive\": true}"
-    }
+    },
+    "authorId": 1
 }
