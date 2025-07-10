@@ -23,14 +23,12 @@ export class PostsService {
 
   public async findAll(userId: string) {
     let posts = await this.postRepository
-      .find
-      //  optional here to include relations get data from other tables
-      // {
-      // relations: {
-      //   metaOptions: true,
-      // },
-      // }
-      ();
+      .find({
+        relations: {
+          // author: true,
+          metaOptions: true,
+        }
+      });
     return posts;
   }
 
