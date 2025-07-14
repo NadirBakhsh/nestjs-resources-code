@@ -5,6 +5,7 @@ import { MetaOption } from 'src/meta-options/meta-option.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from '../post.entity';
+import { TagsService } from 'src/tags/providers/tags.service';
 
 @Injectable()
 export class PostsService {
@@ -19,26 +20,33 @@ export class PostsService {
     // Injecting Meta options repository
     @InjectRepository(MetaOption)
     private readonly metaOptionRepository: Repository<MetaOption>,
+
+    // injecting Tags service
+    private readonly tagsService: TagsService,
   ) {}
 
   public async findAll(userId: string) {
-    let posts = await this.postRepository
-      .find({
-        relations: {
-          // author: true,
-          metaOptions: true,
-        }
-      });
+    let posts = await this.postRepository.find({
+      relations: {
+        // author: true,
+        metaOptions: true,
+      },
+    });
     return posts;
   }
 
   public async create(@Body() createPostDto: CreatePostDto) {
-    
     // find author from database based on authorId
     let author = await this.usersService.findOneById(createPostDto.authorId);
-    
+
+    let tags = await this.tagsService.findMultipleTags(createPostDto.tags);
+
     // create a post
-    let post = this.postRepository.create({...createPostDto, author});
+    let post = this.postRepository.create({
+      ...createPostDto,
+      author,
+      tags: tags,
+    });
 
     //  return post
     return await this.postRepository.save(post);

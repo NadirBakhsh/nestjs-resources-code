@@ -4,16 +4,13 @@ Content-Type: application/json
 {
     "title": "Post Title",
     "postType": "post",
-    "slug": "post-title-4",
+    "slug": "post-title-5",
     "status": "draft",
     "content": "Post content",
     "schema": "{\r\n  \"@context\": \"https:\\/\\/schema.org\",\r\n  \"@type\": \"Person\"\r\n}",
     "featuredImageUrl": "https://example.com/image.jpg",
     "publishOn": "2020-01-01T00:00:00.000Z",
-    // "tags": [
-    //     "tag1",
-    //     "tag2"
-    // ],
+    "tags": [1],
     "metaOptions": {
         "metaValue": "{\"sidebarEnabled\": true, \"footerActive\": true}"
     },
