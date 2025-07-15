@@ -30,6 +30,7 @@ export class PostsService {
       relations: {
         // author: true,
         metaOptions: true,
+        // tags: true,
       },
     });
     return posts;
