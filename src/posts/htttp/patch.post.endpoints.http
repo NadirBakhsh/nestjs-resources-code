@@ -2,5 +2,15 @@ PATCH http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "id": 1
+    "id": 7,
+    "title": "Post Title with Tags",
+    "postType": "post",
+    "status": "draft",
+    "content": "Post content",
+    "featuredImageUrl": "https://example.com/image.jpg",
+    "publishOn": "2020-01-01T00:00:00.000Z",
+    "tags": [2,1],
+    "metaOptions": {
+        "metaValue": "{\"sidebarEnabled\": true, \"footerActive\": true}"
+    }
 }
