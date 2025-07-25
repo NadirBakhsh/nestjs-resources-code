@@ -31,4 +31,13 @@ export class TagsService {
 
     return results;
   }
+
+    public async softRemove(id: number) {
+    await this.tagsRepository.softDelete(id);
+
+    return {
+      softDeleted: true,
+      id,
+    };
+  }
 }

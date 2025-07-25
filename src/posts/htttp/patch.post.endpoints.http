@@ -2,8 +2,8 @@ PATCH http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "id": 7,
-    "title": "Post Title with Tags",
+    "id": 6,
+    "title": "Post Title with Tags and Meta Options",
     "postType": "post",
     "status": "draft",
     "content": "Post content",

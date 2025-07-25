@@ -1,4 +1,4 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/createPost.dto';
 import { MetaOption } from 'src/meta-options/meta-option.entity';
@@ -70,6 +70,9 @@ export class PostsService {
     let post = await this.postRepository.findOneBy({
       id: patchPostDto.id,
     });
+    if (!post) {
+      throw new NotFoundException(`Post with id ${patchPostDto.id} not found`);
+    }
 
     // update the properties
     post.title = patchPostDto.title ?? post.title;
