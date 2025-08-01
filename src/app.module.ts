@@ -10,6 +10,7 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
 import { PostsModule } from './posts/posts.module';
 import { TagsModule } from './tags/tags.module';
 import { UsersModule } from './users/users.module';
+import environmentValidation from './config/environment.validation';
 const ENV = process.env.NODE_ENV || 'development';
 @Module({
   imports: [
@@ -21,6 +22,7 @@ const ENV = process.env.NODE_ENV || 'development';
       // envFilePath: ['.env.development', '.env.production'],
       envFilePath: !ENV ? '.env.development' : `.env.${ENV}`,
       load: [appConfig, databaseConfig],
+      validationSchema: environmentValidation,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
