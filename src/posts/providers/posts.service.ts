@@ -63,31 +63,44 @@ export class PostsService {
   }
 
   public async update(patchPostDto: PatchPostDto) {
-    // find the tags
-    let tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
+    if (!patchPostDto.id) {
+      throw new NotFoundException('Post id must be provided');
+    }
 
-    // find the post
-    let post = await this.postRepository.findOneBy({
-      id: patchPostDto.id,
-    });
+    let tags;
+    try {
+      tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
+    } catch (err) {
+      throw new NotFoundException('Error fetching tags: ' + err.message);
+    }
+
+    let post;
+    try {
+      post = await this.postRepository.findOneBy({
+        id: patchPostDto.id,
+      });
+    } catch (err) {
+      throw new NotFoundException('Error fetching post: ' + err.message);
+    }
+
     if (!post) {
       throw new NotFoundException(`Post with id ${patchPostDto.id} not found`);
     }
 
-    // update the properties
-    post.title = patchPostDto.title ?? post.title;
-    post.content = patchPostDto.content ?? post.content;
-    post.status = patchPostDto.status ?? post.status;
-    post.slug = patchPostDto.slug ?? post.slug;
-    post.postType = patchPostDto.postType ?? post.postType;
-    post.featuredImageUrl =
-      patchPostDto.featuredImageUrl ?? post.featuredImageUrl;
-    post.publishOn = patchPostDto.publishOn ?? post.publishOn;
+    try {
+      post.title = patchPostDto.title ?? post.title;
+      post.content = patchPostDto.content ?? post.content;
+      post.status = patchPostDto.status ?? post.status;
+      post.slug = patchPostDto.slug ?? post.slug;
+      post.postType = patchPostDto.postType ?? post.postType;
+      post.featuredImageUrl =
+        patchPostDto.featuredImageUrl ?? post.featuredImageUrl;
+      post.publishOn = patchPostDto.publishOn ?? post.publishOn;
+      post.tags = tags;
 
-    // Assign the new tags to the post
-    post.tags = tags;
-
-    // Save the post and return it
-    return await this.postRepository.save(post);
+      return await this.postRepository.save(post);
+    } catch (err) {
+      throw new NotFoundException('Error updating post: ' + err.message);
+    }
   }
 }
