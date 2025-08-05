@@ -46,34 +46,64 @@ export class UsersService {
       userExists = await this.usersRepository.findOne({
         where: { email: createUserDto.email },
       });
-
     } catch (error) {
       throw new RequestTimeoutException(
         'unable to create user at this moment, please try again',
         {
           description:
-          'User creation failed due to a timeout error. Please try again later.',
+            'User creation failed due to a timeout error. Please try again later.',
         },
       );
     }
-    
+
     // Handle exception
     if (userExists) {
-      throw new BadRequestException(
-        'User with this email already exists',
-        {
-          description: 'User creation failed because the email is already in use.',
-        },
-      );
+      throw new BadRequestException('User with this email already exists', {
+        description:
+          'User creation failed because the email is already in use.',
+      });
     }
 
     // create a new user
     let newUser = this.usersRepository.create(createUserDto);
-    newUser = await this.usersRepository.save(newUser);
+
+    try {
+      newUser = await this.usersRepository.save(newUser);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to save user at this moment, please try again',
+        {
+          description:
+            'User creation failed due to a timeout error. Please try again later.',
+        },
+      );
+    }
     return newUser;
   }
 
   public async findOneById(userId: number) {
-    return await this.usersRepository.findOneBy({ id: userId });
+    let user = undefined;
+    try {
+      user = await this.usersRepository.findOneBy({ id: userId });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to find user at this moment, please try again',
+        {
+          description:
+            'User retrieval failed due to a timeout error. Please try again later.',
+        },
+      );
+    }
+
+    /*
+     * handle the user does not exist case
+     */
+    if (!user) {
+      throw new BadRequestException(`User with id ${userId} does not exist`, {
+        description: 'User retrieval failed because the user does not exist.',
+      });
+    }
+
+    return user;
   }
 }
