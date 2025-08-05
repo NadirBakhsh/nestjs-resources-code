@@ -1,6 +1,8 @@
 import {
   BadRequestException,
   forwardRef,
+  HttpException,
+  HttpStatus,
   Inject,
   Injectable,
   RequestTimeoutException,
@@ -29,14 +31,19 @@ export class UsersService {
     limit: number,
     page: number,
   ) {
-    const isAuth = this.authService.isAuth();
-
-    console.log('profileConfiguration:', this.profileConfiguration);
-
-    return [
-      { firstName: 'John', email: 'john@example.com' },
-      { firstName: 'Jane', email: 'jane@example.com' },
-    ];
+    throw new HttpException(
+      {
+        statusCode: HttpStatus.MOVED_PERMANENTLY,
+        error: 'This endpoint has been moved to a new location',
+        fileName: 'src/users/providers/users.service.ts',
+        lineNumber: 30,
+      },
+      HttpStatus.MOVED_PERMANENTLY,
+      {
+        cause: new Error(),
+        description: 'This endpoint has been moved to a new location.',
+      },
+    );
   }
 
   public async createUser(createUserDto: CreateUserDto) {
