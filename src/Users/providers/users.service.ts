@@ -1,12 +1,18 @@
-import { Injectable, Inject, forwardRef } from '@nestjs/common';
-import { GetUsersParamDto } from '../dtos/get-user-params.dto';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { Repository } from 'typeorm';
-import { User } from '../user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from '../dtos/create-user.dtos';
-import { ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
+import { CreateUserDto } from '../dtos/create-user.dtos';
+import { GetUsersParamDto } from '../dtos/get-user-params.dto';
+import { User } from '../user.entity';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +30,7 @@ export class UsersService {
     page: number,
   ) {
     const isAuth = this.authService.isAuth();
-    
+
     console.log('profileConfiguration:', this.profileConfiguration);
 
     return [
@@ -34,26 +40,40 @@ export class UsersService {
   }
 
   public async createUser(createUserDto: CreateUserDto) {
-    // check is user sxsists with same email
-    const userExists = await this.usersRepository.findOne({
-      where: { email: createUserDto.email },
-    })
+    let userExists = undefined;
 
-    console.log('userExists', userExists)
+    try {
+      userExists = await this.usersRepository.findOne({
+        where: { email: createUserDto.email },
+      });
 
-    // Handle exception
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'unable to create user at this moment, please try again',
+        {
+          description:
+          'User creation failed due to a timeout error. Please try again later.',
+        },
+      );
+    }
     
+    // Handle exception
+    if (userExists) {
+      throw new BadRequestException(
+        'User with this email already exists',
+        {
+          description: 'User creation failed because the email is already in use.',
+        },
+      );
+    }
+
     // create a new user
     let newUser = this.usersRepository.create(createUserDto);
     newUser = await this.usersRepository.save(newUser);
     return newUser;
   }
 
-
-
   public async findOneById(userId: number) {
-    return  await this.usersRepository.findOneBy({ id: userId });
+    return await this.usersRepository.findOneBy({ id: userId });
   }
-
-
 }
