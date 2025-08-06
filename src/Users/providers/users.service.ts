@@ -10,7 +10,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import profileConfig from '../config/profile.config';
 import { CreateUserDto } from '../dtos/create-user.dtos';
 import { GetUsersParamDto } from '../dtos/get-user-params.dto';
@@ -25,6 +25,11 @@ export class UsersService {
     private usersRepository: Repository<User>,
     @Inject(profileConfig.KEY)
     private readonly profileConfiguration: ConfigType<typeof profileConfig>,
+
+    /*
+     * inject Datasource
+     */
+    private readonly dataSource: DataSource,
   ) {}
   public findAll(
     getUsersParamDto: GetUsersParamDto,
@@ -112,5 +117,36 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  public async createMany(createUsersDto: CreateUserDto[]) {
+    let newUsers: User[] = [];
+
+    // create query runner instance
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    // connect query runner to database
+    await queryRunner.connect();
+
+    // start transaction
+    await queryRunner.startTransaction();
+
+    try {
+      for (let user of createUsersDto) {
+        let newUser = queryRunner.manager.create(User, user);
+        let result = await queryRunner.manager.save(newUser);
+        newUsers.push(result);
+      }
+
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      // release query runner
+      await queryRunner.release();
+    }
+    // if successFul commit
+    // if un-successFul rollback
+    // Release Connection
   }
 }
