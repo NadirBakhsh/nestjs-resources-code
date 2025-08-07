@@ -16,6 +16,7 @@ import { CreateUserDto } from '../dtos/create-user.dtos';
 import { GetUsersParamDto } from '../dtos/get-user-params.dto';
 import { User } from '../user.entity';
 import { UsersCreateManyProvider } from './users-create-many.provider';
+import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
 
 @Injectable()
 export class UsersService {
@@ -120,8 +121,14 @@ export class UsersService {
     return user;
   }
 
-  public async createMany(createUsersDto: CreateUserDto[]) {
-    return await this.usersCreateManyProvider.createMany(createUsersDto);
+  /**
+   * Creates multiple users.
+   * 
+   * @param createManyUsersDto - An array of CreateManyUsersDto objects.
+   * @returns A promise that resolves to an array of User objects.
+   */
+  public async createMany(createManyUsersDto: CreateManyUsersDto){
+    return await this.usersCreateManyProvider.createMany(createManyUsersDto);
   }
 
 }
