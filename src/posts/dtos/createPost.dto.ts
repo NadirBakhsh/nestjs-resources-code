@@ -90,7 +90,6 @@ export class CreatePostDto {
     description: 'Publish date',
     example: '2020-01-01T00:00:00.000Z',
   })
-  @IsISO8601()
   @IsOptional()
   publishOn?: Date;
 
