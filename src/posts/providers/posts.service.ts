@@ -9,6 +9,7 @@ import { TagsService } from 'src/tags/providers/tags.service';
 import { PatchPostDto } from '../dtos/patch-post-dto';
 import { GetPostsDto } from '../dtos/get-posts-dto';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { Paginated } from 'src/common/pagination/interfaces/paginated.interface';
 
 @Injectable()
 export class PostsService {
@@ -32,7 +33,7 @@ export class PostsService {
 
   ) {}
 
-  public async findAll(postQuery: GetPostsDto,userId: string) {
+  public async findAll(postQuery: GetPostsDto,userId: string): Promise<Paginated<Post>> {
     let posts = await this.paginationProvider.paginationQuery({
       limit: postQuery.limit,
       page: postQuery.page,

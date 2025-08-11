@@ -3,6 +3,7 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { ObjectLiteral, Repository } from 'typeorm';
 import { PaginationQueryDto } from '../dtos/pagination-query-dto';
+import { Paginated } from '../interfaces/paginated.interface';
 export class PaginationProvider {
   constructor(
     @Inject(REQUEST)
@@ -12,7 +13,7 @@ export class PaginationProvider {
   public async paginationQuery<T extends ObjectLiteral>(
     paginationQuery: PaginationQueryDto,
     repository: Repository<T>,
-  ) {
+  ): Promise<Paginated<T>> {
     let results = await repository.find({
       skip: (paginationQuery.page - 1) * paginationQuery.limit,
       take: paginationQuery.limit,
@@ -33,6 +34,23 @@ export class PaginationProvider {
         ? paginationQuery.page
         : paginationQuery.page - 1;
 
-    return results;
+    const finalResponse: Paginated<T> = {
+      data: results,
+      meta: {
+        itemsPerPage: paginationQuery.limit,
+        totalItems: totalItems,
+        currentPage: paginationQuery.page,
+        totalPages: totalPages,
+      },
+      links: {
+        first: `${newUrl.origin}${newUrl.pathname}?page=1&limit=${paginationQuery.limit}`,
+        last: `${newUrl.origin}${newUrl.pathname}?page=${totalPages}&limit=${paginationQuery.limit}`,
+        current: `${newUrl.origin}${newUrl.pathname}?page=${paginationQuery.page}&limit=${paginationQuery.limit}`,
+        next: `${newUrl.origin}${newUrl.pathname}?page=${nextPage}&limit=${paginationQuery.limit}`,
+        previous: `${newUrl.origin}${newUrl.pathname}?page=${previousPage}&limit=${paginationQuery.limit}`,
+      },
+    };
+
+    return finalResponse;
   }
 }
