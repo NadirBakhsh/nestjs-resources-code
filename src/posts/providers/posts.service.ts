@@ -8,6 +8,7 @@ import { Post } from '../post.entity';
 import { TagsService } from 'src/tags/providers/tags.service';
 import { PatchPostDto } from '../dtos/patch-post-dto';
 import { GetPostsDto } from '../dtos/get-posts-dto';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 
 @Injectable()
 export class PostsService {
@@ -25,14 +26,17 @@ export class PostsService {
 
     // injecting Tags service
     private readonly tagsService: TagsService,
+
+    // injecting pagination provider
+    private readonly paginationProvider: PaginationProvider, // Assuming PaginationProvider is the correct type for pagination provider
+
   ) {}
 
   public async findAll(postQuery: GetPostsDto,userId: string) {
-    let posts = await this.postRepository.find({
-      skip: (postQuery.page - 1) * postQuery.limit,
-      take: postQuery.limit,
-     
-    });
+    let posts = await this.paginationProvider.paginationQuery({
+      limit: postQuery.limit,
+      page: postQuery.page,
+    }, this.postRepository );
     return posts;
   }
 
