@@ -5,7 +5,7 @@ export class Paginated<T> {
         totalItems: number;
         currentPage: number;
         totalPages: number;
-    },
+    };
     links: {
         first: string;
         last: string;
