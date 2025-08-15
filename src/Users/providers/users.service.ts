@@ -17,6 +17,7 @@ import { GetUsersParamDto } from '../dtos/get-user-params.dto';
 import { User } from '../user.entity';
 import { UsersCreateManyProvider } from './users-create-many.provider';
 import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
+import { CreateUserProvider } from './create-user.provider';
 
 @Injectable()
 export class UsersService {
@@ -31,7 +32,12 @@ export class UsersService {
     /*
      * inject create many provider
      */
-    private readonly usersCreateManyProvider: UsersCreateManyProvider
+    private readonly usersCreateManyProvider: UsersCreateManyProvider,
+
+
+    private readonly createUserProvider: CreateUserProvider,
+
+
   ) {}
   public findAll(
     getUsersParamDto: GetUsersParamDto,
@@ -54,46 +60,9 @@ export class UsersService {
   }
 
   public async createUser(createUserDto: CreateUserDto) {
-    let userExists = undefined;
-
-    try {
-      userExists = await this.usersRepository.findOne({
-        where: { email: createUserDto.email },
-      });
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'unable to create user at this moment, please try again',
-        {
-          description:
-            'User creation failed due to a timeout error. Please try again later.',
-        },
-      );
-    }
-
-    // Handle exception
-    if (userExists) {
-      throw new BadRequestException('User with this email already exists', {
-        description:
-          'User creation failed because the email is already in use.',
-      });
-    }
-
-    // create a new user
-    let newUser = this.usersRepository.create(createUserDto);
-
-    try {
-      newUser = await this.usersRepository.save(newUser);
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to save user at this moment, please try again',
-        {
-          description:
-            'User creation failed due to a timeout error. Please try again later.',
-        },
-      );
-    }
-    return newUser;
+    return await this.createUserProvider.createUser(createUserDto);
   }
+
 
   public async findOneById(userId: number) {
     let user = undefined;
