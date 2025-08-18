@@ -14,8 +14,7 @@ export class SignInProvider {
 
     public async signIn(signinDto: SigninDto) {
         // Step 1 & 2: Find user by email, throws if not found
-        const user: any | null = await this.usersService.findOneByEmail(signinDto.email);
-
+        const user: any = await this.usersService.findOneByEmail(signinDto.email);
         // Step 3: Compare password to hash
         let isEqual = false;
         try {

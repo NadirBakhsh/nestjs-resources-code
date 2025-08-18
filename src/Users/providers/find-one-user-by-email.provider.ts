@@ -27,5 +27,6 @@ export class FindOneUserByEmailProvider {
         description: 'The user with the provided email does not exist.',
       });
     }
+    return user;
   }
 }
