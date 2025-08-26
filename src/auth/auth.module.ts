@@ -1,4 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
+import * as dotenv from 'dotenv';
 import { AuthController } from './auth.controller';
 import { AuthService } from './providers/auth.service';
 import { UsersModule } from 'src/users/users.module';
@@ -8,6 +9,7 @@ import { SignInProvider } from './providers/sign-in.provider';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
+dotenv.config();
 @Module({
   controllers: [AuthController],
   providers: [
