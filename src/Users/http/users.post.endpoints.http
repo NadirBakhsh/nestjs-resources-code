@@ -10,18 +10,19 @@ Content-Type: application/json
 
 POST http://localhost:3000/users/create-many
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoibmFkaXIyQGdtYWlsLmNvbSIsImlhdCI6MTc1NjMwMTAwOCwiZXhwIjoxNzU2MzA0NjA4LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.e-7odaOi4mlAPHLHvVm3-kXxsTi0oLYvgitbfnfvY58
 {  
   "users": [
     {
-     "firstName": "Nadir1",
-     "lastName": "Bakhsh",
-     "email": "Nadir1@gmail.com",
+     "firstName": "Ali",
+     "lastName": "khan",
+     "email": "ali10@gmail.com",
      "password": "N@123321"
   },
     {
-     "firstName": "Nadir1",
-     "lastName": "Bakhsh",
-     "email": "Nadir1@gmail.com",
+     "firstName": "Khan",
+     "lastName": "bahi",
+     "email": "khan11@gmail.com",
      "password": "N@123321"
   }
 ] 
