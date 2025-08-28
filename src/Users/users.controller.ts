@@ -20,6 +20,8 @@ import { UsersService } from './providers/users.service';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateManyUsersDto } from './dtos/create-many-users.dto';
 import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { AuthType } from 'src/auth/enums/auth-type.enum';
 
 @ApiTags('users')
 @Controller('users')
@@ -59,6 +61,7 @@ export class UsersController {
   }
 
   @Post()
+  @Auth(AuthType.None)
   public createUser(
     @Body() createUserDto: CreateUserDto,
     @Headers() headers: any,
