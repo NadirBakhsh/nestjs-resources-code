@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dtos/createPost.dto';
 import { PatchPostDto } from './dtos/patch-post-dto';
 import { PostsService } from './providers/posts.service';
 import { GetPostsDto } from './dtos/get-posts-dto';
+import { REQUEST_USER_KEY } from 'src/auth/constants/auth.constants';
 @ApiTags('Posts')
 @Controller('posts')
 export class PostsController {
@@ -24,8 +25,14 @@ export class PostsController {
         description: 'The record has been successfully created.',
     })
     @Post()
-    public createPost(@Body() createPostDto: CreatePostDto) {
-        return this.postsService.create(createPostDto);
+    public createPost(
+        @Req() request,
+        /*
+        @Body() createPostDto: CreatePostDto
+        */
+    ) {
+        console.log("request.user:", request[REQUEST_USER_KEY]);
+        // return this.postsService.create(createPostDto);
     }
 
     @ApiOperation({

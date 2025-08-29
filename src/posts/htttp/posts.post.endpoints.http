@@ -1,6 +1,6 @@
 POST http://localhost:3000/posts
 Content-Type: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoibmFkaXIyQGdtYWlsLmNvbSIsImlhdCI6MTc1NjQ3ODk4MiwiZXhwIjoxNzU2NDgyNTgyLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.zlUp0eqXZuU82fzu8UEMwVz9yUe8CysbyFhJK7E8PvM
 {
     "title": "Post Title",
     "postType": "post",
