@@ -61,7 +61,7 @@ export class UsersController {
   }
 
   @Post()
-  @Auth(AuthType.None)
+  @Auth(AuthType.None, AuthType.Bearer)
   public createUser(
     @Body() createUserDto: CreateUserDto,
     @Headers() headers: any,
