@@ -45,7 +45,7 @@ export class PostsController {
     @Body() createPostDto: CreatePostDto,
     @ActiveUser() user: ActiveUserData,
   ) {
-    console.log('Active User:', user);
+    return this.postsService.create(createPostDto, user);
   }
 
   @ApiOperation({

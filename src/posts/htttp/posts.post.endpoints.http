@@ -1,17 +1,18 @@
 POST http://localhost:3000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoibmFkaXIyQGdtYWlsLmNvbSIsImlhdCI6MTc1NjgxOTMyOCwiZXhwIjoxNzU2ODIyOTI4LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.uVKOfzWpuopfdg1Cdz2KELm5kRZ93H7OVDrij0vjJYY
-  {  "title": "Post Title 1",
-    "postType": "post",
-    "slug": "post-title-55",
-    "status": "draft",
-    "content": "Post content",
-    "schema": "{\r\n  \"@context\": \"https:\\/\\/schema.org\",\r\n  \"@type\": \"Person\"\r\n}",
-    "featuredImageUrl": "https://example.com/image.jpg",
-    "publishOn": "2020-01-01T00:00:00.000Z",
-    "tags": [1],
-    "metaOptions": {
-        "metaValue": "{\"sidebarEnabled\": true, \"footerActive\": true}"
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoibmFkaXIyQGdtYWlsLmNvbSIsImlhdCI6MTc1NjgyMzY2MCwiZXhwIjoxNzU2ODI3MjYwLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.Hucq7A7s3081RqMMUMASd_vBqk8HfTJ7pndcxaAA3Fk
+{
+  "title": "What's new with NestJS 1",
+  "postType": "post",
+  "slug": "new-with-nestjs-41",
+  "status": "draft",
+  "content": "test content",
+  "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\": \"Person\"\r\n }",
+  "featuredImageUrl": "http://localhost.com/images/image1.jpg",
+  "publishOn": "2025-09-02T12:00:00Z",
+  //"tags": ["nestjs", "typescript"],
+  "metaOptions" : {
+      "metaValue": "{\"sidebarEnabled\": true, \"footerActive\":true}"
     },
-    "authorId": 1
+  "tags": [1]
 }
