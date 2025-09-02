@@ -1,10 +1,9 @@
 POST http://localhost:3000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoibmFkaXIyQGdtYWlsLmNvbSIsImlhdCI6MTc1NjQ3ODk4MiwiZXhwIjoxNzU2NDgyNTgyLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.zlUp0eqXZuU82fzu8UEMwVz9yUe8CysbyFhJK7E8PvM
-{
-    "title": "Post Title",
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoibmFkaXIyQGdtYWlsLmNvbSIsImlhdCI6MTc1NjgxOTMyOCwiZXhwIjoxNzU2ODIyOTI4LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.uVKOfzWpuopfdg1Cdz2KELm5kRZ93H7OVDrij0vjJYY
+  {  "title": "Post Title 1",
     "postType": "post",
-    "slug": "post-title-5",
+    "slug": "post-title-55",
     "status": "draft",
     "content": "Post content",
     "schema": "{\r\n  \"@context\": \"https:\\/\\/schema.org\",\r\n  \"@type\": \"Person\"\r\n}",
