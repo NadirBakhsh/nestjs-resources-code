@@ -9,6 +9,7 @@ import { SignInProvider } from './providers/sign-in.provider';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
+import { GenerateTokensProvider } from './providers/generate-tokens.provider';
 dotenv.config();
 @Module({
   controllers: [AuthController],
@@ -18,6 +19,7 @@ dotenv.config();
       provide: HashingProvider, 
       useClass: BcryptProvider 
     },
+    GenerateTokensProvider,
     SignInProvider,
   ],
   imports: [
