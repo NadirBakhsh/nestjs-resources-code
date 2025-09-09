@@ -20,6 +20,8 @@ import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
 import { CreateUserProvider } from './create-user.provider';
 import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
 import { FindOneByGoogleIdProvider } from './find-one-by-google-id.provider';
+import { GoogleUser } from 'src/auth/interfaces/google-user.interface';
+import { CreateGoogleUserProvider } from './create-google-user.provider';
 
 @Injectable()
 export class UsersService {
@@ -42,6 +44,8 @@ export class UsersService {
     private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
 
     private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
+
+    private readonly createGoogleUserProvider: CreateGoogleUserProvider,
 
 
   ) {}
@@ -113,6 +117,10 @@ export class UsersService {
 
   public async findOneByGoogleId(googleId: string) {
     return await this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
+  }
+
+  public async createGoogleUser(googleUser: GoogleUser){
+    return await this.createGoogleUserProvider.createGoogleUser(googleUser);
   }
 
 }
