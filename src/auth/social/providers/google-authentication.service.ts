@@ -1,5 +1,5 @@
 import { GenerateTokensProvider } from './../../providers/generate-tokens.provider';
-import { forwardRef, Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { ConflictException, forwardRef, Inject, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { OAuth2Client } from 'google-auth-library';
 import jwtConfig from 'src/auth/config/jwt.config';
@@ -27,11 +27,10 @@ export class GoogleAuthenticationService implements OnModuleInit {
 
     public async authentication(googleTokenDto: GoogleTokenDto) {
       // verify the google token sent by the client
+      try {
       const loginTicket = await this.oauthClient.verifyIdToken({
         idToken: googleTokenDto.token,
       });
-
-      console.log(loginTicket);
 
       const {
         email,
@@ -47,7 +46,17 @@ export class GoogleAuthenticationService implements OnModuleInit {
         return this.generateTokensProvider.generateAccessToken(user);
       }
       //  if not create a new user and then generate tokens
+      const newUser = await this.usersService.createGoogleUser({
+        email,
+        firstName,
+        lastName,
+        googleId,
+      });
+      return this.generateTokensProvider.generateAccessToken(newUser);
       //  throw unauthorized exception
 
+    } catch (error) {
+      throw new UnauthorizedException(error);
     }
+}
 }
