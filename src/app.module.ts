@@ -14,9 +14,10 @@ import { PaginationModule } from './common/pagination/pagination.module';
 import environmentValidation from './config/environment.validation';
 import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './auth/config/jwt.config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
 import { AuthenticationGuardGuard } from './auth/guards/authentication/authentication.guard/authentication.guard.guard';
+import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
 const ENV = process.env.NODE_ENV || 'development';
 @Module({
   imports: [
@@ -57,6 +58,10 @@ const ENV = process.env.NODE_ENV || 'development';
     {
       provide: APP_GUARD,
       useClass: AuthenticationGuardGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: DataResponseInterceptor,
     },
     AccessTokenGuard,
   ],
