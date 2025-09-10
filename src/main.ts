@@ -1,3 +1,4 @@
+import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -27,6 +28,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   
   app.enableCors();
+  app.useGlobalInterceptors(new DataResponseInterceptor());
   await app.listen(3000);
 }
 bootstrap();
