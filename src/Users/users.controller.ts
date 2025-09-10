@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   DefaultValuePipe,
   Delete,
@@ -13,6 +14,7 @@ import {
   Put,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dtos';
 import { GetUsersParamDto } from './dtos/get-user-params.dto';
@@ -52,6 +54,7 @@ export class UsersController {
       'The position of the page number that you want the API to return',
     example: 1,
   })
+  @UseInterceptors(ClassSerializerInterceptor)
   public getUser(
     @Param() getUsersParamDto: GetUsersParamDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,

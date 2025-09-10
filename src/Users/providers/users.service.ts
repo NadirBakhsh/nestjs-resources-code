@@ -49,24 +49,15 @@ export class UsersService {
 
 
   ) {}
-  public findAll(
+  public async findAll(
     getUsersParamDto: GetUsersParamDto,
     limit: number,
     page: number,
   ) {
-    throw new HttpException(
-      {
-        statusCode: HttpStatus.MOVED_PERMANENTLY,
-        error: 'This endpoint has been moved to a new location',
-        fileName: 'src/users/providers/users.service.ts',
-        lineNumber: 30,
-      },
-      HttpStatus.MOVED_PERMANENTLY,
-      {
-        cause: new Error(),
-        description: 'This endpoint has been moved to a new location.',
-      },
-    );
+    return await this.usersRepository.find({
+      take: limit,
+      skip: (page - 1) * limit,
+    });
   }
 
   public async createUser(createUserDto: CreateUserDto) {
