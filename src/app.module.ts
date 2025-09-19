@@ -18,6 +18,7 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
 import { AuthenticationGuardGuard } from './auth/guards/authentication/authentication.guard/authentication.guard.guard';
 import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
+import { MailModule } from './mail/mail.module';
 const ENV = process.env.NODE_ENV || 'development';
 @Module({
   imports: [
@@ -51,6 +52,7 @@ const ENV = process.env.NODE_ENV || 'development';
     TagsModule,
     MetaOptionsModule,
     PaginationModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

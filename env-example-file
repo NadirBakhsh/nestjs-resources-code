@@ -18,3 +18,9 @@ JWT_REFRESH_TOKEN_TTL=86400
 ## Google OAuth
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+
+## Email Notification
+MAIL_HOST=smtp.example.com
+SMTP_USERNAME=your-smtp-username
+SMTP_PASSWORD=your-smtp-password
