@@ -8,7 +8,7 @@ export class MailService {
         private readonly mailerService: MailerService,
     ) {}
 
-    public async sendUserWelcome(user: User): Promise<void> {
+    public async sendUserWelcomeEmail(user: User): Promise<void> {
         await this.mailerService.sendMail({
             to: user.email,
             from: 'Onboarding Team <kKlOJ@example.com>',

@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 import { HashingProvider } from 'src/auth/providers/hashing.provider';
 import { CreateUserDto } from '../dtos/create-user.dtos';
+import { MailService } from 'src/mail/providers/mail.service';
 
 @Injectable()
 export class CreateUserProvider {
@@ -23,6 +24,7 @@ export class CreateUserProvider {
     @Inject(forwardRef(() => HashingProvider))
     private readonly hashingProvider: HashingProvider, // Assuming HashingProvider is the correct type for hashing provider
 
+    private readonly mailService: MailService
   ) {}
   public async createUser(createUserDto: CreateUserDto) {
     let userExists = undefined;
@@ -66,6 +68,19 @@ export class CreateUserProvider {
         },
       );
     }
+
+    try {
+      await this.mailService.sendUserWelcomeEmail(newUser);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to send welcome email at this moment, please try again',
+        {
+          description:
+            'Sending welcome email failed due to a timeout error. Please try again later.',
+        },
+      );
+    }
+
     return newUser;
   }
 }
