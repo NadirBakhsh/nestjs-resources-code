@@ -30,9 +30,6 @@ export class UsersService {
     private readonly authService: AuthService,
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    @Inject(profileConfig.KEY)
-    private readonly profileConfiguration: ConfigType<typeof profileConfig>,
-
     /*
      * inject create many provider
      */
