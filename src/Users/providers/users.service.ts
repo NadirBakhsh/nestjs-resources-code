@@ -26,8 +26,7 @@ import { CreateGoogleUserProvider } from './create-google-user.provider';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(forwardRef(() => AuthService))
-    private readonly authService: AuthService,
+
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     /*
