@@ -8,10 +8,22 @@ import { UsersService } from './users.service';
 import { DataSource } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../user.entity';
+import { CreateUserDto } from '../dtos/create-user.dtos';
 
 describe('User service', () => {
+ 
+  let service: UsersService;
   beforeEach(async () => {
-    let service: UsersService;
+    const mockCreateUserProvider: Partial<CreateUserProvider> = {
+      createUser: (createUserDto: CreateUserDto) => Promise.resolve({
+        id: 1,
+        firstName: createUserDto.firstName,
+        lastName: createUserDto.lastName,
+        email: createUserDto.email,
+        password: createUserDto.password
+      })
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
@@ -34,7 +46,7 @@ describe('User service', () => {
         },
         {
           provide: CreateUserProvider,
-          useValue: { CreateUserProvider: jest.fn() },
+          useValue: mockCreateUserProvider,
         },
         {
           provide: FindOneUserByEmailProvider,
@@ -54,9 +66,28 @@ describe('User service', () => {
     service = module.get<UsersService>(UsersService);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(service).toBeDefined();
+  // create user test
+
+  describe('createUser', () => {
+    it('should be defined', () => {
+      expect(service.createUser).toBeDefined();
+    });
+
+    it('should create a user', async () => {
+      const createUserDto: CreateUserDto = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        password: 'password123',
+      };
+      const user = await service.createUser(createUserDto);
+      expect(user).toBeDefined();
+      expect(user.id).toBe(1);
+      expect(user.firstName).toBe(createUserDto.firstName);
+      expect(user.lastName).toBe(createUserDto.lastName);
+      expect(user.email).toBe(createUserDto.email);
+      expect(user.password).toBe(createUserDto.password);
     });
   });
+
 });
